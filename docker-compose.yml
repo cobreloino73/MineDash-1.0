@@ -1,0 +1,69 @@
+# ================================================================
+# MineDash AI v2.0 - Docker Compose
+# Division Salvador, Codelco Chile
+# ================================================================
+
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: minedash-backend
+    restart: unless-stopped
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ENABLE_SIMULATIONS=${ENABLE_SIMULATIONS:-True}
+      - ENABLE_LEARNING=${ENABLE_LEARNING:-True}
+      - MAX_TOOL_ITERATIONS=${MAX_TOOL_ITERATIONS:-5}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-your-super-secret-key-change-in-production}
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-*}
+    volumes:
+      - backend_data:/app/data
+      - backend_outputs:/app/outputs
+      - lightrag_storage:/app/lightrag_storage
+      - user_history:/app/user_history
+    ports:
+      - "8001:8001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    networks:
+      - minedash-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: minedash-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - minedash-network
+
+volumes:
+  backend_data:
+    driver: local
+  backend_outputs:
+    driver: local
+  lightrag_storage:
+    driver: local
+  user_history:
+    driver: local
+
+networks:
+  minedash-network:
+    driver: bridge

@@ -1,0 +1,91 @@
+# ===========================================
+# MineDash AI v2.0 - Git Ignore
+# ===========================================
+
+# Python virtual environments
+backend/venv/
+backend/.venv/
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Large data files
+*.xlsx
+*.xlsb
+*.xls
+*.csv
+*.db
+*.sqlite
+*.sqlite3
+
+# Documents (large)
+*.pdf
+*.pptx
+*.pptm
+*.docx
+*.doc
+
+# Binary files
+*.dll
+*.exe
+*.so
+*.dylib
+
+# Environment files
+.env
+*.env.local
+
+# Node modules
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+nul
+
+# Backend data folder (large files)
+backend/data/
+backend/lightrag_storage/
+backend/outputs/
+backend/user_history/
+backend/knowledge/
+backend/knowledge_base/
+
+# Database files
+*.db
+learning.db
+minedash.db
+backend/minedash.db
+backend/learning.db
+
+# Test files
+backend/test_*.py
+backend/test_*.json
+backend/*.json
+
+# Backup files
+*.backup
+*.bak
+
+# Logs
+*.log
+logs/
+
+# Cache
+.cache/

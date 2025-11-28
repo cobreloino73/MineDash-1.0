@@ -1,0 +1,41 @@
+# MineDash AI - Requirements v2.0
+# Sistema Experto División Salvador, Codelco Chile
+# Python 3.12 compatible
+
+# ============================================
+# CORE - LLM & Embeddings
+# ============================================
+anthropic>=0.39.0
+google-generativeai>=0.8.0
+lightrag-hku>=0.1.0
+sentence-transformers>=3.0.0
+
+# ============================================
+# WEB FRAMEWORK
+# ============================================
+fastapi>=0.115.0
+uvicorn[standard]>=0.31.0
+python-multipart>=0.0.9
+
+# ============================================
+# DATA PROCESSING
+# ============================================
+pandas>=2.2.0
+numpy>=1.26.0
+openpyxl>=3.1.0
+python-docx>=1.1.0
+python-pptx>=1.0.0
+pdfplumber>=0.11.0
+
+# ============================================
+# ASYNC & UTILITIES
+# ============================================
+aiofiles>=23.2.1
+python-dotenv>=1.0.0
+networkx>=3.3
+
+# ============================================
+# OPTIONAL (si usas en el futuro)
+# ============================================
+# chromadb>=0.5.0
+# langchain>=0.3.0
