@@ -54,6 +54,19 @@ class MineDashMemory:
             self._initialized = True
             self._fallback_memory = []
 
+            # Cargar memoria persistida desde archivo
+            memory_file = self.save_dir / "fallback_memory.txt"
+            if memory_file.exists():
+                try:
+                    with open(memory_file, 'r', encoding='utf-8') as f:
+                        content = f.read()
+                        # Separar por delimitador ---
+                        docs = [doc.strip() for doc in content.split('---') if doc.strip()]
+                        self._fallback_memory = docs
+                        print(f"[HippoRAG] Cargados {len(docs)} documentos desde fallback_memory.txt")
+                except Exception as load_error:
+                    print(f"[HippoRAG] Error cargando memoria: {load_error}")
+
     def ingest_documents(self, documents: List[str]) -> Dict:
         """
         Indexa una lista de documentos en HippoRAG.

@@ -102,6 +102,9 @@ from knowledge.deep_reasoning import (
 
 from knowledge.loader import get_knowledge_prompt_section
 
+# Importar HippoRAG para contexto de dominio (v3.0)
+from services.hipporag_service import search_knowledge as hipporag_search
+
 
 
 #  Importar Economic Manager
@@ -3929,7 +3932,19 @@ Prompt caching 24h en GPT-5.1 reduce costos después del primer request.
 
         
 
-        # 1. Buscar en LightRAG si está disponible
+        # 1. Buscar en HippoRAG para contexto de dominio (v3.0 - PRIORITARIO)
+        try:
+            print("    [HippoRAG] Buscando contexto de dominio...")
+            hipporag_context = hipporag_search(user_message)
+            if hipporag_context and "No encontre" not in hipporag_context and len(hipporag_context) > 50:
+                enriched_sections.append(
+                    f"\n═══ CONTEXTO DE DOMINIO (HippoRAG) ═══\n{hipporag_context[:1500]}"
+                )
+                print(f"    [HippoRAG] Contexto encontrado: {len(hipporag_context)} chars")
+        except Exception as e:
+            print(f"    [HippoRAG] Error: {e}")
+
+        # 2. Buscar en LightRAG si está disponible (complementario)
 
         if self.lightrag:
 
